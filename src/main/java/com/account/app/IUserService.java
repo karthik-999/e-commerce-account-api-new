@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.account.app.dto.CreateUserRequestModel;
 import com.account.app.dto.CreateUserResponseModel;
 import com.account.app.dto.UserResponseModel;
+import com.account.app.entities.UserEntity;
 
 @FeignClient(value = "user-api/user-app/users/", decode404 = true)
 public interface IUserService {
@@ -20,5 +21,7 @@ public interface IUserService {
 	@GetMapping(value="/{userId}")
 	public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId);
 
+	@GetMapping(value="/user/{userId}")
+    public ResponseEntity<UserEntity> getUser1(@PathVariable("userId") Long userId);
 
 }

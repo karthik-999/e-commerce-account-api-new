@@ -78,6 +78,17 @@
 			<version>3.6.0.1398</version>
 			<type>pom</type>
 		</dependency>
+		<!-- swagger configuration -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -109,6 +120,18 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.5</version>
+
+				<configuration>
+					<excludes>
+						<exclude>**/com/account/app/entities/**/*.class</exclude>
+						<exclude>**/com/account/app/dto/**/*.class</exclude>
+						<exclude>**/com/account/app/exceptions/**/*.class</exclude>
+						<exclude>**/com/account/app/requests/**/*.class</exclude>
+						<exclude>**/com/account/app/swagger/**/*.class</exclude>
+						<exclude>**/com/account/app/repositories/**/*.class</exclude>
+					</excludes>
+				</configuration>
+
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>

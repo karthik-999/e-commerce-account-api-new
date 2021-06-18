@@ -38,7 +38,7 @@ public class Account {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="USER_PROFILE_ID")
-	private User user;
+	private UserEntity user;
 	
 	/*
 	 * One Account may have Many Addresses like Separate Shipping Address, and Billing Address

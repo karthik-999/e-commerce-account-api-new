@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TBL_USER")
-public class User {
+public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +40,8 @@ public class User {
 	@Column(name = "USER_NAME", unique = true, nullable = false)
 	private String userName;
 
-	@Column(name = "SEX", nullable = false)
-	private String sex;
+	@Column(name = "GENDER", nullable = false)
+	private String gender;
 
 	@Column(name = "MMEBER_TYPE", nullable = false)
 	private String memberType;

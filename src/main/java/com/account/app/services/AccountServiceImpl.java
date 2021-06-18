@@ -19,7 +19,7 @@ import com.account.app.IUserService;
 import com.account.app.dto.UserResponseModel;
 import com.account.app.entities.Account;
 import com.account.app.entities.Address;
-import com.account.app.entities.User;
+import com.account.app.entities.UserEntity;
 import com.account.app.repositories.AccountRepository;
 import com.account.app.requests.createAccountDTO;
 import com.account.app.service.interfaces.IAccountService;
@@ -29,7 +29,7 @@ public class AccountServiceImpl implements IAccountService {
 
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	IUserService userService;
 
@@ -61,20 +61,25 @@ public class AccountServiceImpl implements IAccountService {
 	public Account saveAccount(createAccountDTO accountDTO) {
 		Account account = new Account();
 		ResponseEntity<UserResponseModel> responseModel;
-		if(!(accountDTO.getAccountName() != null && accountDTO.getAccountNumber() != null )) {
+		if (!(accountDTO.getAccountName() != null && accountDTO.getAccountNumber() != null)) {
 			throw new RuntimeException("check request parameters");
 		}
-//		if(accountDTO.getUser() != null) {
-//			responseModel = userService.getUser(accountDTO.getUser());
-//		}
+		UserResponseModel userDetails = new UserResponseModel();
+		if(userService != null) {
+			userDetails = userService.getUser(accountDTO.getUserName()).getBody();
+			if (userDetails != null && userDetails.getUserId() != null) {
+				throw new RuntimeException("Username|Email|userId already Exists");
+			}	
+		}
+		
 		account.setAccountName(accountDTO.getAccountName());
 		account.setAccountNumber(accountDTO.getAccountNumber());
-		User user = new User();
+		UserEntity user = new UserEntity();
 		BeanUtils.copyProperties(accountDTO, user);
 		user.setRgistrationDate(Date.valueOf(LocalDate.now()));
 		user.setEncryptedPassword(bCryptPasswordEncoder.encode(accountDTO.getPassword()));
-		user.setUserId(UUID.randomUUID().toString());
+		user.setUserId(UUID.randomUUID().toString().replace("-", ""));
 		account.setUser(user);
-		return  accountRepository.save(account);
+		return accountRepository.save(account);
 	}
 }

@@ -15,7 +15,7 @@ public class createAccountDTO {
 
 	private String lastName;
 
-	private String sex;
+	private String gender;
 
 	private String memberType;
 	
